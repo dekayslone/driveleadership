@@ -1292,6 +1292,7 @@
       padding: 100px 60px;
       background: var(--off);
       position: relative;
+      overflow: hidden;
     }
 
     .gallery-header {
@@ -1316,11 +1317,52 @@
       margin: 0 auto;
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    .gallery-marquee {
+      display: flex;
       gap: 20px;
+      width: max-content;
       margin-top: 40px;
+    }
+
+    .gallery-marquee-row {
+      display: flex;
+      gap: 20px;
+      overflow: hidden;
+      margin: 0 -60px;
+      padding: 0 60px;
+      position: relative;
+    }
+
+    .gallery-marquee-row:first-child {
+      margin-bottom: 20px;
+    }
+
+    .gallery-marquee-track {
+      display: flex;
+      gap: 20px;
+      animation: marqueeScroll 50s linear infinite;
+      flex-shrink: 0;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    .gallery-marquee-row:nth-child(2) .gallery-marquee-track {
+      animation-direction: reverse;
+      animation-duration: 55s;
+    }
+
+    .gallery-marquee-row:hover .gallery-marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+      0% {
+        transform: translateX(0) translateZ(0);
+      }
+      100% {
+        transform: translateX(-50%) translateZ(0);
+      }
     }
 
     .gallery-item {
@@ -1331,6 +1373,8 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       aspect-ratio: 4/3;
+      width: 280px;
+      flex-shrink: 0;
     }
 
     .gallery-item:hover {
@@ -1354,6 +1398,25 @@
 
     .gallery-item:hover .gallery-image img {
       transform: scale(1.1);
+    }
+
+    /* Mobile responsive for marquee */
+    @media (max-width: 768px) {
+      .gallery-item {
+        width: 200px;
+      }
+      .gallery-marquee-track {
+        animation-duration: 30s;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-item {
+        width: 160px;
+      }
+      .gallery-marquee-track {
+        animation-duration: 25s;
+      }
     }
 
     /* Lightbox Styles */
@@ -1485,13 +1548,9 @@
         padding: 70px 24px;
       }
 
-      .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 16px;
-      }
-
-      .gallery-item {
-        aspect-ratio: 3/2;
+      .gallery-marquee-row {
+        margin: 0 -24px;
+        padding: 0 24px;
       }
 
       .lightbox-content img {
@@ -1529,21 +1588,6 @@
       }
     }
 
-    @media (max-width: 768px) {
-      .photo-gallery {
-        padding: 60px 20px;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 14px;
-      }
-
-      .gallery-item {
-        aspect-ratio: 4/3;
-      }
-    }
-
     @media (max-width: 640px) {
       .photo-gallery {
         padding: 50px 16px;
@@ -1558,13 +1602,9 @@
         padding: 22px;
       }
 
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-
-      .gallery-item {
-        aspect-ratio: 1/1;
+      .gallery-marquee-row {
+        margin: 0 -16px;
+        padding: 0 16px;
       }
 
       .lightbox-content img {
@@ -1588,22 +1628,6 @@
 
       .lightbox-nav {
         display: none; /* Hide navigation on very small screens */
-      }
-    }
-
-    @media (max-width: 480px) {
-      .photo-gallery {
-        padding: 40px 12px;
-      }
-
-      .gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .gallery-item {
-        aspect-ratio: 3/4;
-        border-radius: 8px;
       }
     }
 
@@ -1912,98 +1936,88 @@ leaders who positively enhance the world.
 <section class="annual-events" id="events">
   <div class="events-header reveal">
     <div class="section-tag">Annual Events</div>
-    <h2>9 years of transformative <em>leadership gatherings</em></h2>
+    <h2>8 years of transformative <em>leadership gatherings</em></h2>
     <p>From intimate workshops to large-scale conferences, our annual events bring together leaders from across Africa and beyond to share knowledge, build connections, and drive change.</p>
   </div>
 
   <div class="events-grid">
     <div class="event-card reveal">
       <div class="event-year">2025</div>
-      <h3>Leadership Summit Africa</h3>
-      <p>Our flagship annual conference featuring keynote speakers, workshops, and networking opportunities for 500+ leaders from 15+ countries.</p>
+      <h3>Leading For Impact</h3>
+      <p>Our 2025 theme focused on empowering leaders to drive meaningful change and create lasting impact within their organisations and communities.</p>
       <div class="event-stats">
-        <span>500+ Attendees</span>
-        <span>15 Countries</span>
+        <span>Annual Theme</span>
+        <span>Impact Driven</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.08s">
       <div class="event-year">2024</div>
-      <h3>Emerging Leaders Forum</h3>
-      <p>A dedicated space for next-generation leaders to explore innovative approaches to leadership in the digital age.</p>
+      <h3>Investing In People</h3>
+      <p>Our 2024 theme centred on the power of human capital — developing, nurturing, and empowering people as the greatest asset of any organisation.</p>
       <div class="event-stats">
-        <span>200+ Participants</span>
-        <span>3-Day Intensive</span>
+        <span>Annual Theme</span>
+        <span>People First</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.16s">
       <div class="event-year">2023</div>
-      <h3>Women in Leadership</h3>
-      <p>Celebrating and empowering women leaders through mentorship, skill-building sessions, and community building.</p>
+      <h3>The Game Changer</h3>
+      <p>Our 2023 theme challenged leaders to think differently, break conventions, and become catalysts for transformative change in their fields.</p>
       <div class="event-stats">
-        <span>300+ Women Leaders</span>
-        <span>Regional Focus</span>
+        <span>Annual Theme</span>
+        <span>Transformation</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.04s">
       <div class="event-year">2022</div>
-      <h3>Corporate Leadership Exchange</h3>
-      <p>Bringing together C-suite executives and board members to discuss governance, strategy, and organisational culture.</p>
+      <h3>Decade of The Leader <span style="font-size:0.7rem;font-weight:500;color:var(--gold);text-transform:none;letter-spacing:0.04em;">(Virtual)</span></h3>
+      <p>Our 2022 virtual edition marked a pivotal moment, focusing on the next decade of leadership and equipping leaders to navigate an evolving landscape.</p>
       <div class="event-stats">
-        <span>150+ Executives</span>
-        <span>Private Sessions</span>
+        <span>Virtual Edition</span>
+        <span>Forward Focus</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.12s">
       <div class="event-year">2021</div>
-      <h3>Virtual Leadership Series</h3>
-      <p>Our first fully virtual event series, adapting to global challenges while maintaining engagement and impact.</p>
+      <h3>Amplified Leadership</h3>
+      <p>Our 2021 theme explored how leaders can amplify their influence, vision, and impact to inspire greater action and drive collective success.</p>
       <div class="event-stats">
-        <span>1000+ Online</span>
-        <span>6-Month Series</span>
+        <span>Annual Theme</span>
+        <span>Amplify Impact</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.2s">
       <div class="event-year">2020</div>
-      <h3>Resilient Leadership Summit</h3>
-      <p>Focusing on adaptive leadership during times of uncertainty, featuring case studies from crisis management.</p>
+      <h3>Millennium Times: Honoring The Past, Treasuring The Present, Shaping The Future <span style="font-size:0.7rem;font-weight:500;color:var(--gold);text-transform:none;letter-spacing:0.04em;">(Hybrid)</span></h3>
+      <p>Our 2020 hybrid edition celebrated leadership across generations — honouring foundations, embracing the now, and building a bold future.</p>
       <div class="event-stats">
-        <span>400+ Leaders</span>
-        <span>Hybrid Format</span>
+        <span>Hybrid Edition</span>
+        <span>Generations</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.06s">
       <div class="event-year">2019</div>
-      <h3>Youth Leadership Initiative</h3>
-      <p>Empowering young professionals under 30 with foundational leadership skills and career development strategies.</p>
+      <h3>The Drive To Drive</h3>
+      <p>Our 2019 theme explored the inner engine that propels leaders forward — purpose, passion, and the relentless commitment to keep moving.</p>
       <div class="event-stats">
-        <span>250+ Young Leaders</span>
-        <span>Mentorship Focus</span>
+        <span>Annual Theme</span>
+        <span>Inner Drive</span>
       </div>
     </div>
 
     <div class="event-card reveal" style="transition-delay:0.14s">
       <div class="event-year">2018</div>
-      <h3>Leadership Innovation Lab</h3>
-      <p>An experimental format exploring cutting-edge leadership methodologies and emerging trends in organisational development.</p>
+      <h3>Get Inspired; Push Beyond Your Limits</h3>
+      <p>Our inaugural theme set the tone — inspiring leaders to break through barriers, expand their horizons, and achieve what once seemed impossible.</p>
       <div class="event-stats">
-        <span>120+ Innovators</span>
-        <span>Interactive Labs</span>
-      </div>
-    </div>
-
-    <div class="event-card reveal" style="transition-delay:0.22s">
-      <div class="event-year">2017</div>
-      <h3>Foundational Leadership Conference</h3>
-      <p>Our inaugural event that sparked the Drive Leadership movement, bringing together 80 pioneers in leadership development.</p>
-      <div class="event-stats">
-        <span>80 Pioneers</span>
-        <span>Foundational Event</span>
+        <span>Inaugural Theme</span>
+        <span>Beyond Limits</span>
       </div>
     </div>
   </div>
@@ -2061,124 +2075,172 @@ leaders who positively enhance the world.
     <p>Discover the transformative experiences and impactful moments from our leadership programmes and events.</p>
   </div>
 
-  <div class="gallery-grid">
-    <div class="gallery-item reveal" data-image="DSC04303.jpg" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
-      <div class="gallery-image">
-        <img src="DSC04303.jpg" alt="Leadership Workshop Session" loading="lazy">
+  <div class="gallery-marquee-row reveal">
+    <div class="gallery-marquee-track">
+      <div class="gallery-item" data-image="DSC04303.jpg" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
+        <div class="gallery-image">
+          <img src="DSC04303.jpg" alt="Leadership Workshop Session" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04427.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
+        <div class="gallery-image">
+          <img src="DSC04427.jpg" alt="Team Building Activity" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04503.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
+        <div class="gallery-image">
+          <img src="DSC04503.jpg" alt="Mentorship Session" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04573.jpg" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
+        <div class="gallery-image">
+          <img src="DSC04573.jpg" alt="Corporate Training" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04604.jpg" data-title="Keynote presentation" data-description="A high-energy keynote that inspires action and reflection.">
+        <div class="gallery-image">
+          <img src="DSC04604.jpg" alt="Keynote Presentation" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04636.jpg" data-title="Group discussion" data-description="Thoughtful peer dialogue that deepens leadership insight.">
+        <div class="gallery-image">
+          <img src="DSC04636.jpg" alt="Group Discussion" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04381.jpg" data-title="Networking event" data-description="Connections that continue long after the event ends.">
+        <div class="gallery-image">
+          <img src="DSC04381.jpg" alt="Networking Event" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04475.jpg" data-title="Graduation ceremony" data-description="Celebrating leadership growth and new commitments.">
+        <div class="gallery-image">
+          <img src="DSC04475.jpg" alt="Graduation Ceremony" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04303.jpg" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
+        <div class="gallery-image">
+          <img src="DSC04303.jpg" alt="Leadership Workshop Session" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04427.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
+        <div class="gallery-image">
+          <img src="DSC04427.jpg" alt="Team Building Activity" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04503.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
+        <div class="gallery-image">
+          <img src="DSC04503.jpg" alt="Mentorship Session" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04573.jpg" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
+        <div class="gallery-image">
+          <img src="DSC04573.jpg" alt="Corporate Training" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04604.jpg" data-title="Keynote presentation" data-description="A high-energy keynote that inspires action and reflection.">
+        <div class="gallery-image">
+          <img src="DSC04604.jpg" alt="Keynote Presentation" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04636.jpg" data-title="Group discussion" data-description="Thoughtful peer dialogue that deepens leadership insight.">
+        <div class="gallery-image">
+          <img src="DSC04636.jpg" alt="Group Discussion" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04381.jpg" data-title="Networking event" data-description="Connections that continue long after the event ends.">
+        <div class="gallery-image">
+          <img src="DSC04381.jpg" alt="Networking Event" loading="lazy">
+        </div>
+      </div>
+      <div class="gallery-item" data-image="DSC04475.jpg" data-title="Graduation ceremony" data-description="Celebrating leadership growth and new commitments.">
+        <div class="gallery-image">
+          <img src="DSC04475.jpg" alt="Graduation Ceremony" loading="lazy">
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="gallery-item reveal" style="transition-delay:0.05s" data-image="DSC04427.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
-      <div class="gallery-image">
-        <img src="DSC04427.jpg" alt="Team Building Activity" loading="lazy">
+  <div class="gallery-marquee-row reveal" style="transition-delay:0.2s">
+    <div class="gallery-marquee-track">
+      <div class="gallery-item" data-image="DSC07608.jpg" data-title="Keynote presentation" data-description="A high-energy keynote that inspires action and reflection.">
+        <div class="gallery-image">
+          <img src="DSC07608.jpg" alt="Keynote Presentation" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.1s" data-image="DSC04503.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
-      <div class="gallery-image">
-        <img src="DSC04503.jpg" alt="Mentorship Session" loading="lazy">
+      <div class="gallery-item" data-image="DSC07742.jpg" data-title="Group discussion" data-description="Thoughtful peer dialogue that deepens leadership insight.">
+        <div class="gallery-image">
+          <img src="DSC07742.jpg" alt="Group Discussion" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.15s" data-image="DSC04573.jpg" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
-      <div class="gallery-image">
-        <img src="DSC04573.jpg" alt="Corporate Training" loading="lazy">
+      <div class="gallery-item" data-image="DSC07703.jpg" data-title="Networking event" data-description="Connections that continue long after the event ends.">
+        <div class="gallery-image">
+          <img src="DSC07703.jpg" alt="Networking Event" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.2s" data-image="DSC04604.jpg" data-title="Keynote presentation" data-description="A high-energy keynote that inspires action and reflection.">
-      <div class="gallery-image">
-        <img src="DSC04604.jpg" alt="Keynote Presentation" loading="lazy">
+      <div class="gallery-item" data-image="DSC07715.jpg" data-title="Graduation ceremony" data-description="Celebrating leadership growth and new commitments.">
+        <div class="gallery-image">
+          <img src="DSC07715.jpg" alt="Graduation Ceremony" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.25s" data-image="DSC04636.jpg" data-title="Group discussion" data-description="Thoughtful peer dialogue that deepens leadership insight.">
-      <div class="gallery-image">
-        <img src="DSC04636.jpg" alt="Group Discussion" loading="lazy">
+      <div class="gallery-item" data-image="DSC02104.JPG" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
+        <div class="gallery-image">
+          <img src="DSC02104.JPG" alt="Leadership Workshop Session" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.3s" data-image="DSC04381.jpg" data-title="Networking event" data-description="Connections that continue long after the event ends.">
-      <div class="gallery-image">
-        <img src="DSC04381.jpg" alt="Networking Event" loading="lazy">
+      <div class="gallery-item" data-image="DSC07652.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
+        <div class="gallery-image">
+          <img src="DSC07652.jpg" alt="Team Building Activity" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.35s" data-image="DSC04475.jpg" data-title="Graduation ceremony" data-description="Celebrating leadership growth and new commitments.">
-      <div class="gallery-image">
-        <img src="DSC04475.jpg" alt="Graduation Ceremony" loading="lazy">
+      <div class="gallery-item" data-image="DSC07681.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
+        <div class="gallery-image">
+          <img src="DSC07681.jpg" alt="Mentorship Session" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.4s" data-image="DSC04303.jpg" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
-      <div class="gallery-image">
-        <img src="DSC04303.jpg" alt="Leadership Workshop Session" loading="lazy">
+      <div class="gallery-item" data-image="DSC01806.JPG" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
+        <div class="gallery-image">
+          <img src="DSC01806.JPG" alt="Corporate Training" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.45s" data-image="DSC04427.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
-      <div class="gallery-image">
-        <img src="DSC04427.jpg" alt="Team Building Activity" loading="lazy">
+      <div class="gallery-item" data-image="DSC07608.jpg" data-title="Keynote presentation" data-description="A high-energy keynote that inspires action and reflection.">
+        <div class="gallery-image">
+          <img src="DSC07608.jpg" alt="Keynote Presentation" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.5s" data-image="DSC04503.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
-      <div class="gallery-image">
-        <img src="DSC04503.jpg" alt="Mentorship Session" loading="lazy">
+      <div class="gallery-item" data-image="DSC07742.jpg" data-title="Group discussion" data-description="Thoughtful peer dialogue that deepens leadership insight.">
+        <div class="gallery-image">
+          <img src="DSC07742.jpg" alt="Group Discussion" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.55s" data-image="DSC04573.jpg" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
-      <div class="gallery-image">
-        <img src="DSC04573.jpg" alt="Corporate Training" loading="lazy">
+      <div class="gallery-item" data-image="DSC07703.jpg" data-title="Networking event" data-description="Connections that continue long after the event ends.">
+        <div class="gallery-image">
+          <img src="DSC07703.jpg" alt="Networking Event" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.6s" data-image="DSC07608.jpg" data-title="Keynote presentation" data-description="A high-energy keynote that inspires action and reflection.">
-      <div class="gallery-image">
-        <img src="DSC07608.jpg" alt="Keynote Presentation" loading="lazy">
+      <div class="gallery-item" data-image="DSC07715.jpg" data-title="Graduation ceremony" data-description="Celebrating leadership growth and new commitments.">
+        <div class="gallery-image">
+          <img src="DSC07715.jpg" alt="Graduation Ceremony" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.65s" data-image="DSC07742.jpg" data-title="Group discussion" data-description="Thoughtful peer dialogue that deepens leadership insight.">
-      <div class="gallery-image">
-        <img src="DSC07742.jpg" alt="Group Discussion" loading="lazy">
+      <div class="gallery-item" data-image="DSC02104.JPG" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
+        <div class="gallery-image">
+          <img src="DSC02104.JPG" alt="Leadership Workshop Session" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.7s" data-image="DSC07703.jpg" data-title="Networking event" data-description="Connections that continue long after the event ends.">
-      <div class="gallery-image">
-        <img src="DSC07703.jpg" alt="Networking Event" loading="lazy">
+      <div class="gallery-item" data-image="DSC07652.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
+        <div class="gallery-image">
+          <img src="DSC07652.jpg" alt="Team Building Activity" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.75s" data-image="DSC07715.jpg" data-title="Graduation ceremony" data-description="Celebrating leadership growth and new commitments.">
-      <div class="gallery-image">
-        <img src="DSC07715.jpg" alt="Graduation Ceremony" loading="lazy">
+      <div class="gallery-item" data-image="DSC07681.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
+        <div class="gallery-image">
+          <img src="DSC07681.jpg" alt="Mentorship Session" loading="lazy">
+        </div>
       </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.8s" data-image="DSC02104.JPG" data-title="Leadership workshop" data-description="A collaborative session focused on practical leadership growth.">
-      <div class="gallery-image">
-        <img src="DSC02104.JPG" alt="Leadership Workshop Session" loading="lazy">
-      </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.85s" data-image="DSC07652.jpg" data-title="Team building activity" data-description="An energising moment of trust and shared purpose.">
-      <div class="gallery-image">
-        <img src="DSC07652.jpg" alt="Team Building Activity" loading="lazy">
-      </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.9s" data-image="DSC07681.jpg" data-title="Mentorship session" data-description="A focused conversation shaping future leaders.">
-      <div class="gallery-image">
-        <img src="DSC07681.jpg" alt="Mentorship Session" loading="lazy">
-      </div>
-    </div>
-
-    <div class="gallery-item reveal" style="transition-delay:0.95s" data-image="DSC01806.JPG" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
-      <div class="gallery-image">
-        <img src="DSC01806.JPG" alt="Corporate Training" loading="lazy">
+      <div class="gallery-item" data-image="DSC01806.JPG" data-title="Corporate training" data-description="A practical workshop designed for real organisational impact.">
+        <div class="gallery-image">
+          <img src="DSC01806.JPG" alt="Corporate Training" loading="lazy">
+        </div>
       </div>
     </div>
   </div>
