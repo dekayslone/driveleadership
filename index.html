@@ -1593,13 +1593,40 @@
         padding: 50px 16px;
       }
       .annual-events {
-        padding: 70px 20px;
+        padding: 60px 16px;
+      }
+      .events-header {
+        margin-bottom: 36px;
+      }
+      .events-header p {
+        font-size: 0.88rem;
+        margin-top: 12px;
       }
       .events-grid {
         grid-template-columns: 1fr;
+        gap: 18px;
       }
       .event-card {
-        padding: 22px;
+        padding: 20px;
+      }
+      .event-card h3 {
+        font-size: 1.1rem;
+      }
+      .event-card p {
+        font-size: 0.85rem;
+        margin-bottom: 14px;
+      }
+      .event-stats {
+        gap: 8px;
+      }
+      .event-stats span {
+        font-size: 0.7rem;
+        padding: 6px 8px;
+      }
+      .event-year {
+        font-size: 0.7rem;
+        padding: 5px 8px;
+        margin-bottom: 12px;
       }
 
       .gallery-marquee-row {
@@ -1746,11 +1773,64 @@
       .services-header { flex-direction: column; gap: 20px; align-items: flex-start; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .events-grid { grid-template-columns: 1fr 1fr; }
+      .events-header {
+        margin-bottom: 40px;
+      }
       .cta-banner { grid-template-columns: 1fr; gap: 32px; text-align: center; padding: 70px 24px; }
       .cta-actions { justify-content: center; }
       .contact-form .form-row { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       .impact-metrics { grid-template-columns: 1fr; }
+    }
+
+    /* ── ANNUAL EVENTS: Extra small screens (480px and below) ── */
+    @media (max-width: 480px) {
+      .annual-events {
+        padding: 50px 14px;
+      }
+      .events-header {
+        margin-bottom: 28px;
+      }
+      .events-header .section-tag {
+        font-size: 0.68rem;
+        margin-bottom: 14px;
+      }
+      .events-header h2 {
+        font-size: clamp(1.6rem, 6vw, 2rem);
+      }
+      .events-header p {
+        font-size: 0.82rem;
+        line-height: 1.6;
+        margin-top: 10px;
+      }
+      .events-grid {
+        gap: 14px;
+      }
+      .event-card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      .event-card h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+      }
+      .event-card p {
+        font-size: 0.8rem;
+        line-height: 1.6;
+        margin-bottom: 12px;
+      }
+      .event-stats {
+        gap: 6px;
+      }
+      .event-stats span {
+        font-size: 0.65rem;
+        padding: 5px 7px;
+      }
+      .event-year {
+        font-size: 0.65rem;
+        padding: 4px 7px;
+        margin-bottom: 10px;
+      }
     }
 
     /* Custom people SVG illustration inside hero image */
@@ -1829,7 +1909,7 @@ leaders who positively enhance the world.
 <!-- ── STATS STRIP ── -->
 <div class="stats-strip">
   <div class="stat-item reveal">
-    <div class="num">1000<span class="unit">+</span></div>
+    <div class="num">10000<span class="unit">+</span></div>
     <div class="label">ATTENDEES</div>
   </div>
   <div class="stat-item reveal" style="transition-delay:0.1s">
@@ -1837,7 +1917,7 @@ leaders who positively enhance the world.
     <div class="label">Satisfaction Rate</div>
   </div>
   <div class="stat-item reveal" style="transition-delay:0.2s">
-    <div class="num">9<span class="unit">+</span></div>
+    <div class="num">8<span class="unit">+</span></div>
     <div class="label">Years of Impact</div>
   </div>
   <div class="stat-item reveal" style="transition-delay:0.3s">
