@@ -3,7 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drive Leadership</title>
+  <title>The Drive Leadership</title>
+  <meta name="description" content="The Drive Leadership Network equips young people across Nigeria and beyond with leadership summits, mentorship, and opportunities to lead." />
+  <meta name="author" content="The Drive Leadership Network" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#0B1637" />
+  <link rel="canonical" href="https://thedriveleadership.org/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="The Drive Leadership" />
+  <meta property="og:title" content="The Drive Leadership | Building Africa's Next Generation of Leaders" />
+  <meta property="og:description" content="A youth development network building platforms, mentorship, and opportunities for young people to lead across Nigeria and beyond." />
+  <meta property="og:url" content="https://thedriveleadership.org/" />
+  <meta property="og:image" content="https://thedriveleadership.org/SaveClip.App_491494175_18458956969079374_3978011529633030749_n.jpg" />
+  <meta property="og:image:alt" content="A leadership workshop hosted by The Drive Leadership" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Drive Leadership | Building Africa's Next Generation of Leaders" />
+  <meta name="twitter:description" content="A youth development network building platforms, mentorship, and opportunities for young people to lead across Nigeria and beyond." />
+  <meta name="twitter:image" content="https://thedriveleadership.org/SaveClip.App_491494175_18458956969079374_3978011529633030749_n.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://thedriveleadership.org/#organization",
+        "name": "The Drive Leadership Network",
+        "url": "https://thedriveleadership.org/",
+        "foundingDate": "2018-01",
+        "description": "A youth development organisation building platforms that equip young people to lead.",
+        "areaServed": "Nigeria"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://thedriveleadership.org/#maxwell-david-taye",
+        "name": "Maxwell David Taye",
+        "jobTitle": "Founder and Executive Director",
+        "worksFor": { "@id": "https://thedriveleadership.org/#organization" },
+        "description": "Nigerian civic leader, political media strategist, and policy researcher focused on youth political participation, disinformation, electoral integrity, and peacebuilding in West Africa."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://thedriveleadership.org/#website",
+        "url": "https://thedriveleadership.org/",
+        "name": "The Drive Leadership",
+        "publisher": { "@id": "https://thedriveleadership.org/#organization" },
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who are The Drive Leadership programmes designed for?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Our programmes are designed for professionals at all levels, from emerging leaders stepping into their first management role to seasoned executives navigating complex organisational challenges. We also work with corporates looking to develop leadership capability across their teams." }
+      },
+      {
+        "@type": "Question",
+        "name": "How are your programmes delivered?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We offer flexible delivery through in-person workshops, virtual sessions, and blended formats. Corporate engagements are tailored to the client's needs, while open cohort programmes follow a structured calendar with live and asynchronous components." }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes The Drive Leadership different from other programmes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We combine research-backed frameworks with real-world accountability. Our coaches are practitioners, we track outcomes rigorously, and our community continues beyond the programme." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long do the programmes run?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The flagship Emerging Leaders programme runs for 12 weeks. Executive Coaching engagements are typically 6 months, while corporate workshops can be a single day or a multi-session series." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there support after the programme ends?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Alumni gain access to the ongoing community, monthly check-in calls, and exclusive resources." }
+      }
+    ]
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -726,7 +807,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: center;
+      align-items: start;
     }
 
     .about-image {
@@ -782,9 +863,13 @@
 
     .about-content p {
       color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      font-size: 0.86rem;
+    }
+
+    .about-content h2 {
+      max-width: 520px;
     }
 
     .check-list {
@@ -1769,6 +1854,8 @@
       .hero-right { display: none; }
       .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 40px 24px; }
       .about, .impact, .faq-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .about-content { padding-top: 0; }
+      .about-img-label { right: 16px; bottom: 16px; }
       .services-grid { grid-template-columns: 1fr; }
       .services-header { flex-direction: column; gap: 20px; align-items: flex-start; }
       .testimonials-grid { grid-template-columns: 1fr; }
@@ -1849,7 +1936,7 @@
 <!-- ── NAV ── -->
 <nav id="nav" aria-label="Primary navigation">
   <a href="#home" class="logo">
-    <img src="Drive Dark Icon.png" alt="Drive Leadership Logo" style="width:64px;height:96px;">
+    <img src="Drive Dark Icon.png" alt="The Drive Leadership Logo" style="width:64px;height:96px;">
   </a>
   <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle navigation">
     <span></span><span></span><span></span>
@@ -1940,22 +2027,20 @@ leaders who positively enhance the world.
     </div>
 
     <div class="about-content reveal" style="transition-delay:0.2s">
-      <div class="section-tag">About Drive Leadership</div>
-      <h2>We value your growth as much as <em>you do</em></h2>
+      <div class="section-tag">About Maxwell David Taye</div>
+      <h2>Meet Maxwell David <em>Taye</em></h2>
       <p style="margin-top:20px">
-        Drive Leadership is a transformative coaching and development platform committed to growing the next generation of bold, purposeful leaders. We believe leadership is a journey — not a destination.
+        Maxwell David Taye is a Nigerian civic leader, political media strategist, and policy researcher committed to building platforms for young people to lead. He is the Founder and Executive Director of The Drive Leadership Network, a youth development organisation he launched in January 2018 at the University of Ilorin. What began as a campus leadership platform has since grown into a globally connected network reaching over 10,000 young people through leadership summits, conferences, and structured mentorship programmes, with partnerships spanning UNESCO IESALC, the University of Ilorin, and the Kwara State Government.
       </p>
       <p>
-        Through immersive programmes, workshops, and one-on-one coaching, we equip individuals and organisations with the tools to lead authentically, inspire teams, and drive measurable results.
+        Maxwell is also Co-Founder and Managing Director of The Drive Media, a political and strategic media consultancy, and CEO of Kairos Realty Development Limited. He previously served as Research Assistant and Special Adviser at Nigeria's National Assembly under Rt. Hon. Tunji Raheem Olawuyi.
       </p>
-      <ul class="check-list">
-        <li>Personalised leadership coaching tailored to your goals</li>
-        <li>Research-backed frameworks and real-world application</li>
-        <li>Cohort-based learning that builds lasting networks</li>
-        <li>Measurable outcomes that translate to organisational impact</li>
-        <li>Ongoing support beyond the programme</li>
-      </ul>
-      <a href="#contact" class="btn-primary">Learn More</a>
+      <p>
+        He holds an MSc in Peace and Development Work from Linnaeus University, Sweden, where he graduated as Valedictorian on a 75% academic scholarship, and a BSc in Criminology and Security Studies from the University of Ilorin. He is also a Harvard Business School CELP Scholar. His research and writing focus on youth political participation, disinformation, electoral integrity, and peacebuilding in West Africa, work reflected in his published thesis on Nigerian youth political engagement and his op-eds on civic participation.
+      </p>
+      <p>
+        Through The Drive Leadership Network, Maxwell continues to build structures that equip young people across Nigeria and beyond with the tools, mentorship, and opportunities to lead in their communities and countries.
+      </p>
     </div>
   </div>
 </section>
@@ -2130,7 +2215,7 @@ leaders who positively enhance the world.
         </div>
         <div class="metric-card reveal" style="transition-delay:0.2s">
           <div class="big">96%</div>
-          <div class="desc">would recommend Drive Leadership to a colleague</div>
+          <div class="desc">would recommend The Drive Leadership to a colleague</div>
         </div>
       </div>
     </div>
@@ -2355,7 +2440,7 @@ leaders who positively enhance the world.
     <div class="tcard reveal">
       <div class="stars">★★★★★</div>
       <div class="quote-mark">"</div>
-      <p>Drive Leadership completely shifted how I show up as a manager. I went from reacting to situations to proactively shaping my team's culture. Truly life-changing.</p>
+      <p>The Drive Leadership completely shifted how I show up as a manager. I went from reacting to situations to proactively shaping my team's culture. Truly life-changing.</p>
       <div class="tcard-author">
         <div class="tcard-avatar">AO</div>
         <div>
@@ -2398,7 +2483,7 @@ leaders who positively enhance the world.
       <div class="section-tag">FAQ</div>
       <h2>Frequently asked <em>questions</em></h2>
       <p style="margin-top:16px">
-        Everything you need to know about Drive Leadership programmes, our approach, and getting started on your leadership journey.
+        Everything you need to know about The Drive Leadership programmes, our approach, and getting started on your leadership journey.
       </p>
       <a href="#contact" class="btn-primary" style="margin-top:8px">Get In Touch</a>
     </div>
@@ -2406,7 +2491,7 @@ leaders who positively enhance the world.
     <div class="faq-list reveal" style="transition-delay:0.2s">
       <div class="faq-item">
         <button class="faq-question">
-          Who are Drive Leadership programmes designed for?
+          Who are The Drive Leadership programmes designed for?
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
@@ -2430,7 +2515,7 @@ leaders who positively enhance the world.
 
       <div class="faq-item">
         <button class="faq-question">
-          What makes Drive Leadership different from other programmes?
+          What makes The Drive Leadership different from other programmes?
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
@@ -2500,7 +2585,7 @@ leaders who positively enhance the world.
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <a href="#" class="logo">Drive<span>Leadership</span></a>
+      <a href="#" class="logo">The Drive <span>Leadership</span></a>
       <p style="margin-top:16px">A global network dedicated to identifying, training, and positioning the next generation of competent, values-driven leaders who positively enhance the world.</p>
     </div>
     <div class="footer-col">
@@ -2532,7 +2617,7 @@ leaders who positively enhance the world.
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Drive Leadership. All rights reserved.</p>
+    <p>© 2025 The Drive Leadership. All rights reserved.</p>
     <div class="social-icons">
       <a href="https://www.instagram.com/thedriveln/" target="_blank" title="Instagram">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -2648,7 +2733,7 @@ leaders who positively enhance the world.
     const image = item.querySelector('img');
     const imageSrc = item.dataset.image || image?.src;
     const title = item.dataset.title || image?.alt || 'Leadership moment';
-    const description = item.dataset.description || 'A moment from the Drive Leadership journey.';
+    const description = item.dataset.description || 'A moment from The Drive Leadership journey.';
 
     lightboxImage.src = imageSrc;
     lightboxTitle.textContent = title;
