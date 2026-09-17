@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Drive Leadership Summit 2026 | Register</title>
+  <meta name="description" content="Register for The Drive Leadership Summit 2026, the 9th edition, live in Ilorin on October 24th 2026.">
+  <meta name="theme-color" content="#0B1637">
+  <link rel="icon" type="image/png" href="drive.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0B1637;
+      --navy2: #0F1E4A;
+      --blue: #5B8DEF;
+      --blue-light: #9AB8FF;
+      --white: #FFFFFF;
+      --off-white: #F5F7FC;
+      --muted: #68718A;
+      --line: rgba(11, 22, 55, 0.12);
+      --body: 'Montserrat', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--navy);
+      background: var(--off-white);
+      font-family: var(--body);
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 0;
+      padding: 12px 16px;
+      color: var(--white);
+      background: var(--navy);
+      z-index: 10;
+    }
+    .skip-link:focus { left: 0; }
+
+    .site-nav {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1120px, calc(100% - 48px));
+      padding: 12px 18px 12px 20px;
+      color: var(--white);
+      background: rgba(11, 22, 55, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      transform: translateX(-50%);
+      backdrop-filter: blur(14px);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .brand img { width: 32px; height: 48px; object-fit: contain; }
+    .nav-back {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-back:hover { color: var(--blue-light); }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 620px;
+      align-items: end;
+      padding: 150px max(24px, calc((100% - 1120px) / 2)) 76px;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(11, 22, 55, 0.94) 0%, rgba(11, 22, 55, 0.72) 48%, rgba(11, 22, 55, 0.38) 100%),
+        url('DSC01806.JPG') center / cover;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: 8%;
+      bottom: -110px;
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(154, 184, 255, 0.36);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(154, 184, 255, 0.06), 0 0 0 56px rgba(154, 184, 255, 0.04);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: var(--blue-light);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 840px;
+      margin: 22px 0 18px;
+      font-size: clamp(2.7rem, 7vw, 6.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+    .hero-theme {
+      max-width: 650px;
+      margin-bottom: 34px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      line-height: 1.5;
+    }
+    .hero-theme strong { color: var(--white); }
+    .hero-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hero-facts span {
+      padding: 9px 13px;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+    }
+
+    .section {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 104px 0;
+    }
+    .section-heading { max-width: 680px; margin-bottom: 38px; }
+    .section-heading h2 {
+      margin: 14px 0 12px;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+    .section-heading p { color: var(--muted); max-width: 620px; }
+    .section-heading .eyebrow { color: var(--blue); }
+    .section-heading .eyebrow::before { background: var(--blue); }
+
+    .register-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+      gap: 56px;
+      align-items: start;
+    }
+    .register-intro {
+      padding: 30px;
+      color: var(--white);
+      background: var(--navy);
+      border-radius: 16px;
+    }
+    .register-intro h3 { margin-bottom: 16px; font-size: 1.6rem; }
+    .register-intro p { color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; }
+    .register-list { display: grid; gap: 0; margin: 28px 0 0; padding: 0; list-style: none; }
+    .register-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      color: rgba(255, 255, 255, 0.78);
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.82rem;
+    }
+    .register-list strong { color: var(--blue-light); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .registration-form {
+      display: grid;
+      gap: 18px;
+      padding: 34px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 18px 44px rgba(11, 22, 55, 0.08);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 7px; }
+    .field label {
+      color: var(--navy2);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 13px 14px;
+      color: var(--navy);
+      background: #fbfcff;
+      border: 1px solid rgba(11, 22, 55, 0.18);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 0.88rem;
+    }
+    .field textarea { min-height: 112px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: 2px solid rgba(91, 141, 239, 0.28);
+      border-color: var(--blue);
+    }
+    .form-note { margin: 0; color: var(--muted); font-size: 0.75rem; line-height: 1.5; }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      padding: 14px 20px;
+      color: var(--white);
+      background: var(--blue);
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .button:hover { background: var(--navy); }
+
+    .speakers-section { background: var(--white); }
+    .speaker-placeholder {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 22px;
+      align-items: center;
+      padding: 26px;
+      background: var(--off-white);
+      border: 1px dashed rgba(91, 141, 239, 0.46);
+      border-radius: 14px;
+    }
+    .speaker-mark {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      color: var(--blue);
+      background: rgba(91, 141, 239, 0.12);
+      border-radius: 50%;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .speaker-placeholder h3 { margin-bottom: 6px; font-size: 1.15rem; }
+    .speaker-placeholder p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+
+    .site-footer {
+      padding: 34px 24px;
+      color: rgba(255, 255, 255, 0.62);
+      text-align: center;
+      background: var(--navy);
+      font-size: 0.78rem;
+    }
+    .site-footer a { color: var(--blue-light); text-decoration: none; }
+
+    /* ── PREMIUM VISUAL SYSTEM ── */
+    :root {
+      --blue: #D6A85F;
+      --blue-light: #F0C978;
+      --body: 'Montserrat', sans-serif;
+    }
+    body { background: linear-gradient(180deg, #fbfaf7 0%, #f2f3f7 100%); }
+    h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: -0.035em; }
+    .site-nav { background: rgba(7, 15, 38, 0.82); border-color: rgba(214, 168, 95, 0.3); box-shadow: 0 14px 44px rgba(7, 15, 38, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+    .hero { background: linear-gradient(90deg, rgba(7, 15, 38, 0.96) 0%, rgba(11, 22, 55, 0.74) 48%, rgba(11, 22, 55, 0.35) 100%), url('DSC01806.JPG') center / cover; }
+    .hero h1 { max-width: 850px; font-size: clamp(3.2rem, 7vw, 7rem); }
+    .hero-theme strong { color: var(--blue-light); }
+    .hero-facts span { border-radius: 6px; border-color: rgba(214, 168, 95, 0.42); background: rgba(214, 168, 95, 0.12); }
+    .register-intro { background: linear-gradient(145deg, #0a1535, #162754); border: 1px solid rgba(214, 168, 95, 0.3); border-radius: 8px; box-shadow: 0 18px 44px rgba(11, 22, 55, 0.16); }
+    .registration-form { border-radius: 8px; box-shadow: 0 18px 44px rgba(11, 22, 55, 0.1); }
+    .field input, .field select, .field textarea { border-radius: 5px; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline-color: rgba(214, 168, 95, 0.3); border-color: var(--blue); }
+    .button { color: var(--navy); background: var(--blue); border-radius: 5px; }
+    .button:hover { background: var(--blue-light); }
+    .speaker-placeholder { border-radius: 8px; border-color: rgba(214, 168, 95, 0.55); }
+    .speaker-mark { color: #9D6E28; background: rgba(214, 168, 95, 0.16); }
+    .site-footer { background: #070f26; }
+
+    @media (max-width: 760px) {
+      .site-nav { top: 12px; width: calc(100% - 28px); }
+      .nav-back { font-size: 0.68rem; }
+      .hero { min-height: 650px; padding: 140px 24px 54px; }
+      .section { width: calc(100% - 32px); padding: 72px 0; }
+      .register-wrap { grid-template-columns: 1fr; gap: 28px; }
+      .registration-form { padding: 24px 18px; }
+    }
+    @media (max-width: 520px) {
+      h1 { font-size: clamp(2.55rem, 14vw, 4.1rem); }
+      .hero-facts { display: grid; grid-template-columns: 1fr 1fr; }
+      .hero-facts span { border-radius: 10px; text-align: center; }
+      .form-row { grid-template-columns: 1fr; gap: 18px; }
+      .speaker-placeholder { grid-template-columns: 1fr; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#registration">Skip to registration</a>
+
+  <header class="hero">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html">
+        <img src="Drive Dark Icon.png" alt="The Drive Leadership logo">
+        <span>The Drive Leadership</span>
+      </a>
+      <a class="nav-back" href="index.html#events">Back to main site</a>
+    </nav>
+
+    <div class="hero-content">
+      <div class="eyebrow">The 9th Edition · Live in Ilorin</div>
+      <h1>The Drive Leadership Summit 2026</h1>
+      <p class="hero-theme"><strong>Beyond Conversation: Taking Action, Embracing Technology.</strong></p>
+      <div class="hero-facts" aria-label="Event details">
+        <span>October 24th 2026</span>
+        <span>400 Delegates Only</span>
+        <span>Live in Ilorin</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="section" id="registration">
+      <div class="section-heading">
+        <div class="eyebrow">Reserve your place</div>
+        <h2>Be in the room where ideas become action.</h2>
+        <p>Registration is limited to 400 delegates. Complete the form below and the team will follow up with the next steps for attending the summit.</p>
+      </div>
+
+      <div class="register-wrap">
+        <aside class="register-intro">
+          <h3>Summit details</h3>
+          <p>A focused gathering for leaders ready to move from meaningful conversation to practical action, with technology as a tool for greater impact.</p>
+          <ul class="register-list">
+            <li><strong>Date</strong><span>October 24th 2026</span></li>
+            <li><strong>Location</strong><span>Ilorin, Nigeria</span></li>
+            <li><strong>Capacity</strong><span>400 delegates only</span></li>
+            <li><strong>Edition</strong><span>9th Edition</span></li>
+          </ul>
+        </aside>
+
+        <form class="registration-form" action="mailto:thedrive009@gmail.com?subject=Drive%20Leadership%20Summit%202026%20Registration" method="post" enctype="text/plain">
+          <div class="field">
+            <label for="name">1. Full name</label>
+            <input id="name" name="Full name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="organisation">2. Organisation, company, or school</label>
+            <input id="organisation" name="Organisation, company, or school" type="text" autocomplete="organization" required>
+          </div>
+          <div class="field">
+            <label for="employment-status">3. Employment status</label>
+            <select id="employment-status" name="Employment status" required>
+              <option value="">Select your status</option>
+              <option>Employed</option>
+              <option>Student</option>
+              <option>Entrepreneur</option>
+              <option>Unemployed</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="employment-other">If other, please specify</label>
+            <input id="employment-other" name="Other employment status" type="text">
+          </div>
+          <div class="field">
+            <label for="email">4. Email address</label>
+            <input id="email" name="Email address" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">5. Phone number</label>
+            <input id="phone" name="Phone number" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="network-member">6. Are you a member of The Drive Leadership Network?</label>
+            <select id="network-member" name="Member of The Drive Leadership Network" required>
+              <option value="">Select an answer</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="referral-source">7. How did you hear about The Drive Leadership Summit?</label>
+            <select id="referral-source" name="How they heard about the summit" required>
+              <option value="">Select a source</option>
+              <option>Social Media</option>
+              <option>Referral</option>
+              <option>Email Invitation</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="referral-other">If other, please specify</label>
+            <input id="referral-other" name="Other referral source" type="text">
+          </div>
+          <div class="field">
+            <label for="message">8. What are your expectations from attending the summit?</label>
+            <textarea id="message" name="Expectations from attending the summit" required></textarea>
+          </div>
+          <p class="form-note">Submitting will open your email app with your registration details addressed to the event team.</p>
+          <button class="button" type="submit">Submit registration</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="speakers-section">
+      <div class="section">
+        <div class="section-heading">
+          <div class="eyebrow">The programme</div>
+          <h2>Speakers will be announced soon.</h2>
+          <p>We are curating a strong line-up of voices and practitioners for this year's conversation. Check back here for speaker announcements and programme updates.</p>
+        </div>
+        <div class="speaker-placeholder">
+          <div class="speaker-mark" aria-hidden="true">+</div>
+          <div>
+            <h3>Speaker details coming soon</h3>
+            <p>Confirmed speakers, session topics, and the full programme will be added to this page as they are announced.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 The Drive Leadership · <a href="index.html">Return to The Drive Leadership</a></p>
+  </footer>
+
+</body>
+</html>
