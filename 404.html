@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found | The Drive Leadership</title>
+  <meta name="description" content="The page you are looking for could not be found. Explore The Drive Leadership homepage or 2026 summit page." />
+  <meta name="theme-color" content="#0B1637" />
+  <link rel="icon" type="image/png" href="drive.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0B1637;
+      --navy2: #0F1E4A;
+      --blue: #5B8DEF;
+      --blue-light: #9AB8FF;
+      --white: #FFFFFF;
+      --off-white: #F5F7FC;
+      --muted: #68718A;
+      --line: rgba(11, 22, 55, 0.12);
+      --shadow: 0 18px 50px rgba(11, 22, 55, 0.12);
+      --body: 'Montserrat', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--body);
+      background: linear-gradient(180deg, #f7f9fe 0%, #edf3ff 100%);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      padding: 26px 20px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      color: var(--white);
+      background: rgba(11, 22, 55, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(11, 22, 55, 0.14);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand img {
+      width: 36px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px 72px;
+      background:
+        radial-gradient(circle at top left, rgba(91, 141, 239, 0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(11, 22, 55, 0.08), transparent 28%);
+    }
+
+    .error-card {
+      width: min(980px, 100%);
+      padding: clamp(28px, 4vw, 56px);
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(28px, 4vw, 54px);
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--blue);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--blue);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3.2rem, 8vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      color: var(--navy);
+    }
+
+    .subtitle {
+      max-width: 560px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+      box-shadow: 0 14px 30px rgba(91, 141, 239, 0.28);
+    }
+
+    .secondary {
+      color: var(--navy);
+      background: rgba(91, 141, 239, 0.08);
+      border: 1px solid rgba(91, 141, 239, 0.2);
+    }
+
+    .meta-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .meta-links a {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--navy);
+      background: rgba(255, 255, 255, 0.8);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .visual {
+      display: flex;
+      justify-content: center;
+    }
+
+    .visual-panel {
+      position: relative;
+      width: min(370px, 100%);
+      padding: 28px 22px 22px;
+      background: linear-gradient(180deg, #0b1637 0%, #122957 100%);
+      border-radius: 24px;
+      color: var(--white);
+      overflow: hidden;
+      box-shadow: 0 28px 60px rgba(11, 22, 55, 0.16);
+    }
+
+    .visual-panel::before,
+    .visual-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(154, 184, 255, 0.28);
+    }
+
+    .visual-panel::before {
+      top: -60px;
+      right: -34px;
+      width: 170px;
+      height: 170px;
+    }
+
+    .visual-panel::after {
+      bottom: -42px;
+      left: -22px;
+      width: 130px;
+      height: 130px;
+    }
+
+    .panel-label {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 22px;
+      color: var(--blue-light);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .panel-code {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+
+    .panel-text {
+      position: relative;
+      z-index: 1;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 760px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .visual {
+        order: -1;
+      }
+
+      .error-card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand" aria-label="Go to homepage">
+      <img src="drive.png" alt="The Drive Leadership logo" />
+      <span class="brand-text">The Drive Leadership</span>
+    </a>
+  </header>
+
+  <main class="page-shell">
+    <section class="error-card" aria-labelledby="not-found-title">
+      <div class="content">
+        <div>
+          <div class="kicker">Lost your way?</div>
+          <h1 id="not-found-title">404</h1>
+          <p class="subtitle">
+            The page you’re looking for may have been moved, renamed, or never existed. Let’s get you back to the leadership network and the next big conversation.
+          </p>
+
+          <div class="cta-row">
+            <a class="button primary" href="/">Back home</a>
+            <a class="button secondary" href="/thedls.html">View summit</a>
+          </div>
+
+          <ul class="meta-links" aria-label="Quick links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/thedls.html">Summit 2026</a></li>
+            <li><a href="mailto:thedrive009@gmail.com">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="visual" aria-hidden="true">
+          <div class="visual-panel">
+            <div class="panel-label">Status</div>
+            <p class="panel-code">Not found</p>
+            <p class="panel-text">We could not find the page you requested, but the rest of the Drive Leadership experience is still available.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
