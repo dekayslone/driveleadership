@@ -1,0 +1,14 @@
+[
+  {
+    "email": "thedrive009@gmail.com",
+    "password_hash": "pbkdf2_sha256$120000$KF+Dm7BknpJTg9rcn103rA==$jBNjl0PDPVJZ6uNmYVgMhC87PDllIbUYyClYkw52tkE=",
+    "name": "Admin User",
+    "role": "Super Admin"
+  },
+  {
+    "email": "kayslone.dara@gmail.com",
+    "password_hash": "pbkdf2_sha256$120000$kBiCsY8I0t+BAGRCV0G82A==$5xzWovqsqSP2g05l305J4qWDGu3czmUNXA/rp8ugrFA=",
+    "name": "Kayslone Dara",
+    "role": "Super Admin"
+  }
+]

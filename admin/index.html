@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | The Drive Leadership</title>
+    <meta name="description" content="Demo admin dashboard for The Drive Leadership applications and messages." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-dashboard">
+    <div class="admin-layout">
+      <aside class="sidebar" aria-label="Sidebar navigation">
+        <div class="sidebar-header">
+          <button id="mobile-sidebar-toggle" class="mobile-toggle" type="button" aria-label="Toggle navigation">☰</button>
+          <img src="../drive.png" alt="Drive Leadership logo" />
+          <h2>Drive Leadership</h2>
+        </div>
+
+        <nav class="side-nav" aria-label="Admin menu">
+          <button type="button" class="nav-item active" data-section="overview">
+            <span>Overview</span>
+            <span class="badge" data-sidebar-count="overview">0</span>
+          </button>
+          <button type="button" class="nav-item" data-section="attendees">
+            <span>Attendee Applications</span>
+            <span class="badge" data-sidebar-count="attendees">0</span>
+          </button>
+          <button type="button" class="nav-item" data-section="volunteers">
+            <span>Volunteer Applications</span>
+            <span class="badge" data-sidebar-count="volunteers">0</span>
+          </button>
+          <button type="button" class="nav-item" data-section="messages">
+            <span>Contact Messages</span>
+            <span class="badge" data-sidebar-count="messages">0</span>
+          </button>
+          <button type="button" class="nav-item" data-section="settings">
+            <span>Settings</span>
+          </button>
+          <button type="button" class="nav-item" data-section="logout">
+            <span>Logout</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button type="button" id="admin-sign-out">Sign out</button>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow accent">Dashboard</p>
+            <h1 class="page-title">Overview</h1>
+          </div>
+          <div id="dashboard-message" class="form-message" aria-live="polite"></div>
+          <div class="topbar-right">
+            <span class="header-pill">Live database</span>
+            <div class="avatar-mini" aria-label="Admin avatar">AD</div>
+          </div>
+        </header>
+
+        <section data-panel="overview">
+          <div class="stats-grid">
+            <article class="content-card stat-card" data-metric>
+              <div class="stat-top">
+                <p class="stat-label">Total Attendees</p>
+                <span class="stat-icon">A</span>
+              </div>
+              <p class="stat-value">0</p>
+              <div class="stat-foot">
+                <span class="live-label">Live database</span>
+                <span>Current records</span>
+              </div>
+            </article>
+
+            <article class="content-card stat-card" data-metric>
+              <div class="stat-top">
+                <p class="stat-label">Pending Attendees</p>
+                <span class="stat-icon">P</span>
+              </div>
+              <p class="stat-value">0</p>
+              <div class="stat-foot">
+                <span class="live-label">Live database</span>
+                <span>Current records</span>
+              </div>
+            </article>
+
+            <article class="content-card stat-card" data-metric>
+              <div class="stat-top">
+                <p class="stat-label">Approved Attendees</p>
+                <span class="stat-icon">AP</span>
+              </div>
+              <p class="stat-value">0</p>
+              <div class="stat-foot">
+                <span class="live-label">Live database</span>
+                <span>Current records</span>
+              </div>
+            </article>
+
+            <article class="content-card stat-card" data-metric>
+              <div class="stat-top">
+                <p class="stat-label">Rejected Attendees</p>
+                <span class="stat-icon">R</span>
+              </div>
+              <p class="stat-value">0</p>
+              <div class="stat-foot">
+                <span class="live-label">Live database</span>
+                <span>Current records</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="row-grid">
+            <section class="content-card panel">
+              <div class="panel-header">
+                <h3>Recent Applications</h3>
+                <a href="#" class="inline-link">View all</a>
+              </div>
+
+              <div class="table-wrap">
+                <table class="data-table" id="recent-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Type</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="content-card panel">
+              <div class="panel-header">
+                <h3>Message Summary</h3>
+                <a href="#" class="inline-link">Manage</a>
+              </div>
+
+              <div class="stats-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+                <div class="content-card stat-card" style="padding: 16px;">
+                  <p class="stat-label">Total</p>
+                  <p class="stat-value" style="font-size: 1.9rem;" data-message-stat="total">0</p>
+                </div>
+                <div class="content-card stat-card" style="padding: 16px;">
+                  <p class="stat-label">Unread</p>
+                  <p class="stat-value" style="font-size: 1.9rem;" data-message-stat="unread">0</p>
+                </div>
+                <div class="content-card stat-card" style="padding: 16px;">
+                  <p class="stat-label">Read</p>
+                  <p class="stat-value" style="font-size: 1.9rem;" data-message-stat="read">0</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="chart-grid">
+            <section class="content-card panel chart-panel">
+              <div class="panel-header"><h3>Application status</h3><span class="chart-caption">Current records</span></div>
+              <div id="status-chart" class="bar-chart" aria-label="Application status chart"></div>
+            </section>
+            <section class="content-card panel chart-panel">
+              <div class="panel-header"><h3>Applications by source</h3><span class="chart-caption">Referral mix</span></div>
+              <div id="source-chart" class="bar-chart" aria-label="Application source chart"></div>
+            </section>
+          </div>
+          <section class="content-card panel audit-panel">
+            <div class="panel-header"><h3>Recent audit activity</h3><span class="chart-caption">Admin actions</span></div>
+            <div id="audit-log" class="audit-list"><p class="empty-state">No audit activity yet.</p></div>
+          </section>
+        </section>
+
+        <section data-panel="attendees" hidden>
+          <div class="panel content-card">
+            <div class="panel-header">
+              <h3>Attendee Applications</h3>
+              <button type="button" class="inline-link export-btn" data-export="attendee-table">Export CSV</button>
+            </div>
+
+              <div class="toolbar">
+              <div class="search-wrap">
+                <input type="search" data-search placeholder="Search applicants" aria-label="Search applicants" />
+              </div>
+              <div class="filter-group">
+                <select aria-label="Filter by status">
+                  <option>All statuses</option>
+                  <option>Pending</option>
+                  <option>Approved</option>
+                  <option>Rejected</option>
+                </select>
+                <select aria-label="Filter by date">
+                  <option>All dates</option>
+                  <option>Last 7 days</option>
+                  <option>Last 30 days</option>
+                  <option>Last 90 days</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="bulk-toolbar">
+              <label class="checkbox-wrap"><input type="checkbox" data-select-all="attendee-table" /> Select all</label>
+              <select data-bulk-status="attendee-table" aria-label="Bulk attendee status"><option value="">Bulk status</option><option>Pending</option><option>Approved</option><option>Rejected</option></select>
+              <button type="button" class="secondary-btn bulk-apply" data-bulk-table="attendee-table">Apply</button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table" id="attendee-table">
+                <thead>
+                  <tr>
+                    <th><span class="sr-only">Select</span></th><th>Applicant</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div class="section-controls">
+              <button type="button" class="secondary-btn pagination-btn" data-page-action="previous" data-table="attendee-table">Previous</button>
+              <span class="page-indicator" data-page-indicator="attendee-table">Page 1</span>
+              <button type="button" class="secondary-btn pagination-btn" data-page-action="next" data-table="attendee-table">Next</button>
+            </div>
+          </div>
+        </section>
+
+        <section data-panel="volunteers" hidden>
+          <div class="panel content-card">
+            <div class="panel-header">
+              <h3>Volunteer Applications</h3>
+              <button type="button" class="inline-link export-btn" data-export="volunteer-table">Export CSV</button>
+            </div>
+
+            <div class="bulk-toolbar">
+              <label class="checkbox-wrap"><input type="checkbox" data-select-all="volunteer-table" /> Select all</label>
+              <select data-bulk-status="volunteer-table" aria-label="Bulk volunteer status"><option value="">Bulk status</option><option>Pending</option><option>Approved</option><option>Rejected</option></select>
+              <button type="button" class="secondary-btn bulk-apply" data-bulk-table="volunteer-table">Apply</button>
+            </div>
+
+            <div class="toolbar">
+              <div class="search-wrap">
+                <input type="search" data-search placeholder="Search volunteers" aria-label="Search volunteers" />
+              </div>
+              <div class="filter-group">
+                <select aria-label="Filter volunteers by status">
+                  <option>All statuses</option>
+                  <option>Pending</option>
+                  <option>Approved</option>
+                  <option>Rejected</option>
+                </select>
+                <select aria-label="Filter volunteers by date">
+                  <option>All dates</option>
+                  <option>Last 7 days</option>
+                  <option>Last 30 days</option>
+                  <option>Last 90 days</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table" id="volunteer-table">
+                <thead>
+                  <tr>
+                    <th><span class="sr-only">Select</span></th><th>Applicant</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div class="section-controls">
+              <button type="button" class="secondary-btn pagination-btn" data-page-action="previous" data-table="volunteer-table">Previous</button>
+              <span class="page-indicator" data-page-indicator="volunteer-table">Page 1</span>
+              <button type="button" class="secondary-btn pagination-btn" data-page-action="next" data-table="volunteer-table">Next</button>
+            </div>
+          </div>
+        </section>
+
+        <section data-panel="messages" hidden>
+          <div class="panel content-card">
+            <div class="panel-header">
+              <h3>Contact Messages</h3>
+              <button type="button" class="inline-link mark-all-read">Mark all read</button>
+            </div>
+
+            <div class="toolbar">
+              <div class="search-wrap">
+                <input type="search" data-search placeholder="Search messages" aria-label="Search messages" />
+              </div>
+              <div class="filter-group">
+                <select aria-label="Filter messages by status">
+                  <option>All messages</option>
+                  <option>Unread</option>
+                  <option>Read</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="bulk-toolbar">
+              <label class="checkbox-wrap"><input type="checkbox" data-select-all="messages-table" /> Select all</label>
+              <select data-bulk-status="messages-table" aria-label="Bulk message status"><option value="">Bulk status</option><option>Read</option><option>Unread</option><option>Replied</option></select>
+              <button type="button" class="secondary-btn bulk-apply" data-bulk-table="messages-table">Apply</button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table" id="messages-table">
+                <thead>
+                  <tr>
+                    <th><span class="sr-only">Select</span></th><th>Sender</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section data-panel="settings" hidden>
+          <div class="settings-grid">
+            <div class="content-card settings-card">
+              <div class="panel-header">
+                <h3>Admin profile</h3>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label>Admin name</label>
+                  <input type="text" value="Admin User" />
+                </div>
+                <div class="field">
+                  <label>Admin email</label>
+                  <input type="email" value="thedrive009@gmail.com" />
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card settings-card">
+              <div class="panel-header">
+                <h3>Change password</h3>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label>Current password</label>
+                  <input type="password" placeholder="Current password" />
+                </div>
+                <div class="field">
+                  <label>New password</label>
+                  <input type="password" placeholder="New password" />
+                </div>
+              </div>
+
+              <div class="detail-actions" style="margin-top: 20px;">
+                <button type="button" class="secondary-btn">Save changes</button>
+              </div>
+            </div>
+
+            <div class="content-card settings-card">
+              <div class="panel-header">
+                <h3>Notification preferences</h3>
+              </div>
+
+              <div class="switch-row">
+                <span>Approved application emails</span>
+                <button type="button" class="toggle on" aria-label="Toggle approved emails"></button>
+              </div>
+              <div class="switch-row">
+                <span>Rejected application emails</span>
+                <button type="button" class="toggle on" aria-label="Toggle rejected emails"></button>
+              </div>
+              <div class="switch-row">
+                <span>Weekly summary emails</span>
+                <button type="button" class="toggle" aria-label="Toggle weekly summary emails"></button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="application-modal" class="modal" aria-modal="true" role="dialog" aria-labelledby="detail-name">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="detail-name">Application details</h3>
+          <button type="button" class="close-btn" aria-label="Close">×</button>
+        </div>
+
+        <div class="detail-card content-card" style="padding: 18px;">
+          <div class="detail-top">
+            <h3>Applicant summary</h3>
+            <span id="detail-status" class="status-badge status-pending">Pending</span>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-block">
+              <span class="info-label">Email</span>
+              <span id="detail-email" class="info-value">demo@example.com</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Phone</span>
+              <span id="detail-phone" class="info-value">+234 800 000 0000</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Submitted</span>
+              <span id="detail-date" class="info-value">2026-08-18</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Application type</span>
+              <span class="info-value">Attendee</span>
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <button type="button" class="secondary-btn" data-action="approve">Approve</button>
+            <button type="button" class="danger-btn" data-action="reject">Reject</button>
+            <button type="button" class="ghost-btn" data-action="pending">Keep Pending</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="message-modal" class="modal" aria-modal="true" role="dialog" aria-labelledby="message-subject">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="message-subject">Message details</h3>
+          <button type="button" class="close-btn" aria-label="Close">×</button>
+        </div>
+
+        <div class="detail-card content-card" style="padding: 18px;">
+          <div class="detail-top">
+            <h3>Contact message</h3>
+            <span id="message-status" class="status-unread">Unread</span>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-block">
+              <span class="info-label">Sender</span>
+              <span id="message-sender" class="info-value">Ruth Ibrahim</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Email</span>
+              <span id="message-email" class="info-value">ruth@example.com</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Date</span>
+              <span id="message-date" class="info-value">2026-08-14</span>
+            </div>
+          </div>
+
+          <div class="info-block" style="margin-top: 20px;">
+            <span class="info-label">Message</span>
+            <p id="message-body" class="info-value" style="font-weight: 500; line-height: 1.7;">Demo message text.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="admin.js?v=13"></script>
+  </body>
+</html>

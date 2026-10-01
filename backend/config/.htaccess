@@ -1,0 +1,6 @@
+Require all denied
+
+# Keep this directory inaccessible on older Apache configurations too.
+<IfModule !mod_authz_core.c>
+	Deny from all
+</IfModule>

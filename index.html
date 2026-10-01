@@ -2778,10 +2778,10 @@ leaders who positively enhance the world.
       <a href="mailto:thedrive009@gmail.com" class="btn-outline">Email Us</a>
     </div>
   </div>
-  <form class="contact-form reveal" id="contact-form" action="mailto:thedrive009@gmail.com?subject=The%20Drive%20Leadership%20Contact%20Request" method="post" enctype="text/plain" style="transition-delay:0.2s">
+  <form class="contact-form reveal" id="contact-form" style="transition-delay:0.2s">
     <div class="form-row">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="email" name="email" placeholder="Email address" required>
+      <input type="text" name="sender_name" placeholder="Your name" autocomplete="name" required>
+      <input type="email" name="sender_email" placeholder="Email address" autocomplete="email" required>
     </div>
     <select name="interest" required>
       <option value="">What are you interested in?</option>
@@ -2790,9 +2790,9 @@ leaders who positively enhance the world.
       <option>Corporate workshop</option>
       <option>Speaking engagement</option>
     </select>
-    <textarea name="message" placeholder="Tell us a bit about your goals"></textarea>
+    <textarea name="message" placeholder="Tell us a bit about your goals" maxlength="3000"></textarea>
     <button type="submit" class="btn-white">Book a Conversation</button>
-    <p class="form-note">Submitting opens your email app with the message addressed to our team.</p>
+    <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
   </form>
 </div>
 
@@ -2848,6 +2848,7 @@ leaders who positively enhance the world.
 </footer>
 </main>
 
+<script src="public-forms.js?v=12"></script>
 <script>
   // Nav scroll effect
   const nav = document.getElementById('nav');

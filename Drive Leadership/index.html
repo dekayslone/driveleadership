@@ -2433,8 +2433,8 @@ leaders who positively enhance the world.
   </div>
   <form class="contact-form reveal" id="contact-form" style="transition-delay:0.2s">
     <div class="form-row">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="email" name="email" placeholder="Email address" required>
+      <input type="text" name="sender_name" placeholder="Your name" autocomplete="name" required>
+      <input type="email" name="sender_email" placeholder="Email address" autocomplete="email" required>
     </div>
     <select name="interest" required>
       <option value="">What are you interested in?</option>
@@ -2443,7 +2443,7 @@ leaders who positively enhance the world.
       <option>Corporate workshop</option>
       <option>Speaking engagement</option>
     </select>
-    <textarea name="message" placeholder="Tell us a bit about your goals"></textarea>
+    <textarea name="message" placeholder="Tell us a bit about your goals" maxlength="3000"></textarea>
     <button type="submit" class="btn-white">Book a Conversation</button>
     <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
   </form>
@@ -2501,6 +2501,7 @@ leaders who positively enhance the world.
 </footer>
 </main>
 
+<script src="../public-forms.js?v=12"></script>
 <script>
   // Nav scroll effect
   const nav = document.getElementById('nav');
@@ -2556,25 +2557,6 @@ leaders who positively enhance the world.
         answer.style.maxHeight = answer.scrollHeight + 'px';
       }
     });
-  });
-
-  // Contact form
-  const contactForm = document.getElementById('contact-form');
-  const formNote = document.getElementById('form-note');
-
-  contactForm?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const data = new FormData(contactForm);
-    const name = data.get('name')?.toString().trim() || 'there';
-    const email = data.get('email')?.toString().trim();
-
-    if (!email) {
-      formNote.textContent = 'Please add your email so we can reach out.';
-      return;
-    }
-
-    formNote.textContent = `Thanks ${name}! We will be in touch shortly.`;
-    contactForm.reset();
   });
 
   // Photo Gallery Lightbox

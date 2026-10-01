@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "sender": "Ruth Ibrahim",
+    "email": "ruth@example.com",
+    "subject": "Corporate workshop enquiry",
+    "date": "2026-08-14",
+    "status": "Unread"
+  },
+  {
+    "id": 2,
+    "sender": "James Adebisi",
+    "email": "james@example.com",
+    "subject": "Emerging leaders programme",
+    "date": "2026-08-15",
+    "status": "Read"
+  },
+  {
+    "id": 3,
+    "sender": "Nafisa Musa",
+    "email": "nafisa@example.com",
+    "subject": "Speaking engagement request",
+    "date": "2026-08-18",
+    "status": "Unread"
+  }
+]
