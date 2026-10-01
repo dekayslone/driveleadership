@@ -567,6 +567,121 @@ button, input, select, textarea {
   font-size: 1.15rem;
 }
 
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.import-card {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfcff;
+}
+
+.import-card h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.import-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.import-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.import-controls input {
+  flex: 1;
+  min-width: min(100%, 260px);
+}
+
+.import-card .form-message {
+  min-height: 0;
+}
+
+.import-card .form-message:empty {
+  display: none;
+}
+
+.import-preview {
+  display: grid;
+  gap: 12px;
+}
+
+.import-summary {
+  font-weight: 600;
+}
+
+.import-preview .data-table {
+  min-width: 760px;
+}
+
+.import-submit {
+  width: fit-content;
+  min-width: 210px;
+  padding: 0 18px;
+}
+
+.application-expectations {
+  margin-top: 20px;
+}
+
+.application-expectations p {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.email-compose-form {
+  display: grid;
+  gap: 16px;
+}
+
+.email-compose-form .field > span {
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.email-compose-form input,
+.email-compose-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--navy);
+  background: var(--white);
+}
+
+.email-compose-form textarea {
+  resize: vertical;
+}
+
+.email-compose-form .detail-actions {
+  margin-top: 0;
+}
+
+.email-compose-form .primary-btn {
+  width: auto;
+  min-width: 160px;
+  padding: 0 18px;
+}
+
 .inline-link {
   border: 0;
   padding: 0;

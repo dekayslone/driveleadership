@@ -91,8 +91,32 @@ function security_admin_user(string $email, string $password): ?array
     return null;
 }
 
+function security_local_admin_bypass(): bool
+{
+    $configFile = __DIR__ . '/../config/admin.local.php';
+    if (!is_file($configFile)) {
+        return false;
+    }
+
+    $config = require $configFile;
+    if (!is_array($config) || ($config['local_admin_bypass'] ?? false) !== true) {
+        return false;
+    }
+
+    return in_array((string) ($_SERVER['REMOTE_ADDR'] ?? ''), ['127.0.0.1', '::1'], true);
+}
+
 function security_require_admin(): array
 {
+    if (security_local_admin_bypass()) {
+        return [
+            'email' => 'local-admin@localhost',
+            'name' => 'Local Admin',
+            'role' => 'Local Development',
+            'expires_at' => time() + 3600,
+        ];
+    }
+
     $admin = $_SESSION['admin'] ?? null;
     if (!is_array($admin) || !isset($admin['email'], $admin['expires_at']) || (int) $admin['expires_at'] < time()) {
         api_json_response(false, 'Unauthorized.', 401);

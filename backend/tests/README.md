@@ -114,3 +114,15 @@ Invoke-WebRequest -Uri 'http://127.0.0.1:8080/api/volunteer-submit.php' -Method 
 ```
 
 The endpoints currently use local JSON persistence so they can be tested before hosting is available. Before production deployment, replace this storage with the MySQL schema, add CSRF protection, rate limiting, duplicate checks, hashed admin passwords, and email notifications.
+
+## Admin application imports and email
+
+From **Admin → Attendee Applications**, an authenticated admin can preview and import CSV, XLS, XLSX, or text-based PDF response tables. Spreadsheet and PDF files are parsed in the admin's browser; the original file is not uploaded. Only the confirmed, normalized application records are sent to the application import endpoint.
+
+Imports are limited to 300 responses per file and 10 MB per source file. Include the attendee response columns used by the registration form, including full name, organisation, employment status, email, phone, network membership, referral source, and expectations. Existing applications and repeat rows are skipped using a case-insensitive email match. Every response must pass validation before any new rows are saved.
+
+Admins can open an application and send an individual email from its details view. Email delivery uses the configured Resend integration and requires `RESEND_API_KEY` and a valid `DRIVE_FROM_EMAIL`. Changing an application to Approved or Rejected continues to send the existing status notification.
+
+### Temporary local admin login bypass
+
+The ignored `backend/config/admin.local.php` file enables passwordless dashboard access only when the request comes from `127.0.0.1` or `::1`. It is for local XAMPP development only; do not copy it to a public server. Delete this file to restore normal login. The API continues to reject bypass requests from non-loopback addresses.

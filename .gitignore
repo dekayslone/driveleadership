@@ -1,1 +1,2 @@
 backend/config/database.local.php
+backend/config/admin.local.php

@@ -16,6 +16,9 @@ const fallbackSettings = {
   weeklySummary: false
 };
 
+let pendingImportRecords = [];
+let pdfjsLibraryPromise = null;
+
 function readStorage(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -102,7 +105,7 @@ async function logout() {
     // Redirect even when the server is unavailable so local auth state is cleared.
   }
   localStorage.removeItem(STORAGE_KEYS.auth);
-  window.location.href = 'login.html';
+  window.location.href = '../index.html';
 }
 
 function showMessage(el, text, type = 'error') {
@@ -110,86 +113,6 @@ function showMessage(el, text, type = 'error') {
   el.textContent = text;
   el.classList.remove('success', 'error');
   el.classList.add(type === 'success' ? 'success' : 'error');
-}
-
-function loginPageInit() {
-  const form = document.getElementById('admin-login-form');
-  const button = document.getElementById('login-button');
-  const message = document.getElementById('login-message');
-  const passwordInput = document.getElementById('login-password');
-  const toggle = document.querySelector('.password-toggle');
-
-  if (!form || !button || !message || !passwordInput || !toggle) return;
-
-  if (getAuth()) {
-    apiRequest('../backend/api/admin-status.php', { method: 'GET' }).then(({ response }) => {
-      if (response.ok) {
-        window.location.href = 'index.html';
-      } else {
-        localStorage.removeItem(STORAGE_KEYS.auth);
-      }
-    }).catch(() => {
-      localStorage.removeItem(STORAGE_KEYS.auth);
-    });
-  }
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-    const email = String(formData.get('email') || '').trim().toLowerCase();
-    const password = String(formData.get('password') || '').trim();
-    const validEmail = /^.+@.+\..+$/.test(email);
-    const validPassword = password.length > 0;
-
-    button.disabled = true;
-    button.querySelector('.btn-label').textContent = 'Signing you in...';
-    showMessage(message, '', 'error');
-
-    setTimeout(async () => {
-      if (!validEmail || !validPassword) {
-        showMessage(message, 'Invalid email or password.', 'error');
-        button.disabled = false;
-        button.querySelector('.btn-label').textContent = 'Sign in';
-        return;
-      }
-
-      try {
-        const csrfToken = await getCsrfToken();
-        const { response, payload } = await apiRequest('../backend/api/admin-login.php', {
-          method: 'POST',
-          body: JSON.stringify({ email, password, _csrf: csrfToken })
-        });
-
-        if (!response.ok) {
-          showMessage(message, payload?.message || 'Invalid email or password.', 'error');
-          button.disabled = false;
-          button.querySelector('.btn-label').textContent = 'Sign in';
-          return;
-        }
-
-        const user = payload?.user || { email, name: 'Admin User', role: 'Super Admin' };
-        setAuth(user);
-        showMessage(message, 'Login successful. Redirecting...', 'success');
-        button.querySelector('.btn-label').textContent = 'Redirecting...';
-
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 700);
-      } catch (error) {
-        showMessage(message, 'The authentication service is unavailable. Start the PHP server and try again.', 'error');
-        button.disabled = false;
-        button.querySelector('.btn-label').textContent = 'Sign in';
-      }
-    }, 700);
-  });
-
-  toggle.addEventListener('click', () => {
-    const isPassword = passwordInput.type === 'password';
-    passwordInput.type = isPassword ? 'text' : 'password';
-    toggle.textContent = isPassword ? 'Hide' : 'Show';
-    toggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-  });
 }
 
 function resetPasswordInit() {
@@ -233,7 +156,7 @@ function resetPasswordInit() {
         method: 'POST', body: JSON.stringify({ token, password, _csrf: csrfToken })
       });
       showMessage(message, payload?.message || 'Password updated.', response.ok ? 'success' : 'error');
-      if (response.ok) setTimeout(() => { window.location.href = 'login.html'; }, 900);
+      if (response.ok) setTimeout(() => { window.location.href = '../index.html'; }, 900);
     } catch (error) {
       showMessage(message, error.message, 'error');
     }
@@ -382,6 +305,11 @@ function bindApplicantActions() {
       document.getElementById('detail-email').textContent = selected.email;
       document.getElementById('detail-phone').textContent = selected.phone || 'Not provided';
       document.getElementById('detail-date').textContent = selected.date;
+      document.getElementById('detail-organisation').textContent = selected.organisation || 'Not provided';
+      document.getElementById('detail-employment').textContent = [selected.employment_status, selected.employment_status_other].filter(Boolean).join(': ') || 'Not provided';
+      document.getElementById('detail-network-member').textContent = selected.is_network_member || 'Not provided';
+      document.getElementById('detail-referral').textContent = [selected.referral_source, selected.referral_source_other].filter(Boolean).join(': ') || 'Not provided';
+      document.getElementById('detail-expectations').textContent = selected.expectations || 'Not provided';
       setStatusBadge(document.getElementById('detail-status'), selected.status);
 
       modal.classList.add('open');
@@ -410,6 +338,349 @@ function bindApplicantActions() {
       }
     });
   });
+
+  const emailApplicantButton = document.getElementById('email-applicant');
+  if (emailApplicantButton && emailApplicantButton.dataset.bound !== 'true') {
+    emailApplicantButton.dataset.bound = 'true';
+    emailApplicantButton.addEventListener('click', () => {
+      const applicationModal = document.getElementById('application-modal');
+      const applicationId = Number(applicationModal?.dataset.applicationId);
+      const selected = getApplicants().find((item) => Number(item.id) === applicationId);
+      if (!selected) return;
+
+      const emailModal = document.getElementById('email-compose-modal');
+      const emailForm = document.getElementById('application-email-form');
+      if (!emailModal || !emailForm) return;
+      emailForm.reset();
+      emailModal.dataset.applicationId = String(selected.id);
+      document.getElementById('application-email-recipient').value = selected.email;
+      document.getElementById('email-subject').value = 'The Drive Leadership Summit application';
+      document.getElementById('email-body').value = `Dear ${selected.name},\n\n`;
+      showMessage(document.getElementById('application-email-message'), '', 'error');
+      emailModal.classList.add('open');
+    });
+  }
+}
+
+const importFieldAliases = {
+  submitted_at: ['timestamp', 'submittedat', 'submissiondate', 'date'],
+  full_name: ['fullname', 'name', 'applicantname'],
+  organisation: ['organisationcompanyorschool', 'organizationcompanyorschool', 'organisation', 'organization', 'company', 'school'],
+  employment_status: ['employmentstatus', 'employment'],
+  employment_status_other: ['employmentstatusother', 'otheremploymentstatus'],
+  email: ['emailaddress', 'email'],
+  phone: ['phonenumber', 'phone', 'mobilenumber'],
+  is_network_member: ['areyouamemberofthedriveleadershipnetwork', 'memberofthedriveleadershipnetwork', 'isnetworkmember', 'networkmember'],
+  referral_source: ['howdidyouhearaboutthedriveleadershipsummit', 'howtheyheardaboutthesummit', 'referralsource'],
+  referral_source_other: ['referralsourceother', 'otherreferralsource'],
+  expectations: ['whatareyourexpectationsfromattendingthesummit', 'expectationsfromattendingthesummit', 'expectations']
+};
+
+function normalizeImportHeader(value) {
+  return String(value ?? '').trim().toLowerCase().replace(/^\s*\d+\s*[.)-]\s*/, '').replace(/[^a-z0-9]/g, '');
+}
+
+function mapImportHeaders(headers) {
+  const mapped = {};
+  headers.forEach((header, index) => {
+    const normalized = normalizeImportHeader(header);
+    Object.entries(importFieldAliases).some(([field, aliases]) => {
+      if (aliases.includes(normalized) && mapped[field] === undefined) {
+        mapped[field] = index;
+        return true;
+      }
+      return false;
+    });
+  });
+  const referralIndex = mapped.referral_source;
+  headers.forEach((header, index) => {
+    if (normalizeImportHeader(header) !== 'ifotherpleasespecify') return;
+    const field = referralIndex === undefined || index < referralIndex
+      ? 'employment_status_other'
+      : 'referral_source_other';
+    if (mapped[field] === undefined) mapped[field] = index;
+  });
+  return mapped;
+}
+
+function requiredImportFields() {
+  return ['full_name', 'organisation', 'employment_status', 'email', 'phone', 'is_network_member', 'referral_source', 'expectations'];
+}
+
+function normalizeImportChoice(value, choices) {
+  const text = String(value ?? '').trim();
+  const match = choices.find((choice) => choice.toLowerCase() === text.toLowerCase());
+  return match || (text ? 'Other' : '');
+}
+
+function normalizeImportedRecord(values) {
+  const employment = normalizeImportChoice(values.employment_status, ['Employed', 'Student', 'Entrepreneur', 'Unemployed', 'Other']);
+  const referral = normalizeImportChoice(values.referral_source, ['Social Media', 'Referral', 'Email Invitation', 'Other']);
+  const memberText = String(values.is_network_member ?? '').trim();
+  const member = memberText.toLowerCase() === 'yes' ? 'Yes' : memberText.toLowerCase() === 'no' ? 'No' : memberText;
+  return {
+    submitted_at: String(values.submitted_at ?? '').trim(),
+    full_name: String(values.full_name ?? '').trim(),
+    organisation: String(values.organisation ?? '').trim(),
+    employment_status: employment,
+    employment_status_other: String(values.employment_status_other ?? '').trim() || (employment === 'Other' ? String(values.employment_status ?? '').trim() : ''),
+    email: String(values.email ?? '').trim().toLowerCase(),
+    phone: String(values.phone ?? '').trim(),
+    is_network_member: member,
+    referral_source: referral,
+    referral_source_other: String(values.referral_source_other ?? '').trim() || (referral === 'Other' ? String(values.referral_source ?? '').trim() : ''),
+    expectations: String(values.expectations ?? '').trim()
+  };
+}
+
+function importedRecordError(record) {
+  const missing = requiredImportFields().filter((field) => !record[field]);
+  if (missing.length) return `Missing ${missing.join(', ')}`;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(record.email)) return 'Invalid email';
+  if (!/^[+0-9() .-]{1,30}$/.test(record.phone)) return 'Invalid phone';
+  if (!['Employed', 'Student', 'Entrepreneur', 'Unemployed', 'Other'].includes(record.employment_status)) return 'Invalid employment status';
+  if (!['Yes', 'No'].includes(record.is_network_member)) return 'Member must be Yes or No';
+  if (!['Social Media', 'Referral', 'Email Invitation', 'Other'].includes(record.referral_source)) return 'Invalid referral source';
+  if ((record.employment_status === 'Other' && !record.employment_status_other) || (record.referral_source === 'Other' && !record.referral_source_other)) return 'Specify each “Other” response';
+  if (record.full_name.length > 150 || record.organisation.length > 200 || record.employment_status_other.length > 100 || record.email.length > 254 || record.phone.length > 30 || record.referral_source_other.length > 150 || record.expectations.length > 2000) return 'One or more fields exceed the allowed length';
+  if ([record.full_name, record.organisation, record.employment_status_other, record.email, record.phone, record.referral_source_other, record.expectations].some((value) => /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/.test(value))) return 'A field contains invalid control characters';
+  return '';
+}
+
+function recordsFromRows(rows) {
+  const headerRowIndex = rows.slice(0, 30).findIndex((row) => {
+    const mapping = mapImportHeaders(row);
+    return mapping.full_name !== undefined && mapping.email !== undefined;
+  });
+  if (headerRowIndex < 0) throw new Error('Could not find a response header row containing applicant name and email.');
+
+  const mapping = mapImportHeaders(rows[headerRowIndex]);
+  const missingHeaders = requiredImportFields().filter((field) => mapping[field] === undefined);
+  if (missingHeaders.length) throw new Error(`Required response columns were not found: ${missingHeaders.join(', ')}.`);
+
+  return rows.slice(headerRowIndex + 1).map((row) => {
+    if (!Array.isArray(row) || row.every((cell) => String(cell ?? '').trim() === '')) return null;
+    const values = {};
+    Object.entries(mapping).forEach(([field, index]) => { values[field] = row[index] ?? ''; });
+    return normalizeImportedRecord(values);
+  }).filter(Boolean);
+}
+
+async function parseSpreadsheet(file) {
+  if (!window.XLSX) throw new Error('The spreadsheet reader could not be loaded. Refresh the page and try again.');
+  const workbook = window.XLSX.read(await file.arrayBuffer(), { type: 'array', cellDates: true });
+  const sheetName = workbook.SheetNames.find((name) => {
+    const sheet = workbook.Sheets[name];
+    return sheet && window.XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' }).length > 0;
+  });
+  if (!sheetName) throw new Error('The workbook does not contain a response sheet.');
+  const rows = window.XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, defval: '', raw: false, dateNF: 'yyyy-mm-dd hh:mm:ss' });
+  return recordsFromRows(rows);
+}
+
+function pdfLines(items) {
+  const lines = [];
+  items.forEach((item) => {
+    const text = String(item.str ?? '').trim();
+    if (!text) return;
+    const x = Number(item.transform?.[4] ?? 0);
+    const y = Number(item.transform?.[5] ?? 0);
+    let line = lines.find((candidate) => Math.abs(candidate.y - y) <= 2.5);
+    if (!line) {
+      line = { y, items: [] };
+      lines.push(line);
+    }
+    line.items.push({ x, text });
+  });
+  lines.forEach((line) => line.items.sort((left, right) => left.x - right.x));
+  return lines.sort((left, right) => right.y - left.y);
+}
+
+function pdfHeaderMapping(line) {
+  const mapped = {};
+  const candidates = line.items.map((item) => ({ text: item.text, x: item.x }));
+  line.items.forEach((item, index) => {
+    for (let end = index + 1; end <= Math.min(index + 4, line.items.length); end += 1) {
+      const group = line.items.slice(index, end);
+      if (group.length > 1 && group[group.length - 1].x - group[group.length - 2].x > 90) break;
+      candidates.push({ text: group.map((part) => part.text).join(' '), x: item.x });
+    }
+  });
+  const candidateMapping = mapImportHeaders(candidates.map((candidate) => candidate.text));
+  Object.entries(candidateMapping).forEach(([field, index]) => {
+    if (mapped[field] === undefined) mapped[field] = candidates[index].x;
+  });
+  return mapped;
+}
+
+async function parsePdf(file) {
+  if (!pdfjsLibraryPromise) {
+    pdfjsLibraryPromise = import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs');
+  }
+  let pdfjsLib;
+  try {
+    pdfjsLib = await pdfjsLibraryPromise;
+  } catch (error) {
+    pdfjsLibraryPromise = null;
+    throw new Error('The PDF reader could not be loaded. Refresh the page and try again.');
+  }
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs';
+  const document = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+  const records = [];
+  let columnPositions = null;
+  let current = {};
+
+  function finishRecord() {
+    if (Object.values(current).some((value) => String(value).trim())) records.push(normalizeImportedRecord(current));
+    current = {};
+  }
+
+  for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
+    const page = await document.getPage(pageNumber);
+    const lines = pdfLines((await page.getTextContent()).items);
+    const headerIndex = lines.findIndex((line) => {
+      const mapping = pdfHeaderMapping(line);
+      return mapping.full_name !== undefined && mapping.email !== undefined;
+    });
+    let bodyLines = lines;
+    if (headerIndex >= 0) {
+      const newPositions = pdfHeaderMapping(lines[headerIndex]);
+      if (requiredImportFields().every((field) => newPositions[field] !== undefined)) columnPositions = newPositions;
+      bodyLines = lines.slice(headerIndex + 1);
+    }
+    if (!columnPositions) continue;
+
+    const columns = Object.entries(columnPositions).sort((left, right) => left[1] - right[1]);
+    const boundaries = columns.slice(0, -1).map(([, x], index) => (x + columns[index + 1][1]) / 2);
+    bodyLines.forEach((line) => {
+      const values = Object.fromEntries(columns.map(([field]) => [field, '']));
+      line.items.forEach((item) => {
+        let column = boundaries.findIndex((boundary) => item.x < boundary);
+        if (column < 0) column = columns.length - 1;
+        const field = columns[column][0];
+        values[field] = `${values[field]} ${item.text}`.trim();
+      });
+      Object.entries(values).forEach(([field, value]) => {
+        if (value) current[field] = `${current[field] || ''} ${value}`.trim();
+      });
+      const joined = Object.values(values).join(' ');
+      if (/[^\s@]+@[^\s@]+\.[^\s@]+/.test(joined)) finishRecord();
+    });
+  }
+  finishRecord();
+
+  if (!records.length) throw new Error('No response rows could be read. Upload a text-based PDF table with a header row, or use the Excel/CSV export.');
+  return records;
+}
+
+function renderImportPreview(records) {
+  const preview = document.getElementById('import-preview');
+  const tbody = document.getElementById('import-preview-rows');
+  const summary = document.getElementById('import-summary');
+  const button = document.getElementById('confirm-import');
+  const invalidCount = records.filter(importedRecordError).length;
+  const shownRecords = records.slice(0, 20);
+  tbody.innerHTML = shownRecords.map((record) => {
+    const error = importedRecordError(record);
+    return `<tr><td>${escapeHtml(record.full_name)}</td><td>${escapeHtml(record.email)}</td><td>${escapeHtml(record.organisation)}</td><td>${escapeHtml(record.submitted_at || 'Not provided')}</td><td>${escapeHtml(error || 'Ready')}</td></tr>`;
+  }).join('');
+  summary.textContent = `${records.length} response${records.length === 1 ? '' : 's'} found; ${invalidCount} need${invalidCount === 1 ? 's' : ''} correction. ${records.length > shownRecords.length ? `Showing the first ${shownRecords.length}.` : ''}`;
+  button.disabled = records.length === 0 || invalidCount > 0;
+  preview.hidden = false;
+}
+
+async function previewApplicationImport() {
+  const input = document.getElementById('application-import-file');
+  const file = input?.files?.[0];
+  const message = document.getElementById('import-message');
+  const preview = document.getElementById('import-preview');
+  if (!file) {
+    showMessage(message, 'Choose a CSV, Excel, or PDF response file first.', 'error');
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    showMessage(message, 'The file exceeds the 10 MB upload limit.', 'error');
+    return;
+  }
+
+  try {
+    const extension = file.name.split('.').pop().toLowerCase();
+    if (!['csv', 'xls', 'xlsx', 'pdf'].includes(extension)) throw new Error('Choose a CSV, Excel (.xls/.xlsx), or PDF file.');
+    const records = extension === 'pdf' ? await parsePdf(file) : await parseSpreadsheet(file);
+    if (records.length > 300) throw new Error('A single import can contain no more than 300 responses.');
+    if (!records.length) throw new Error('No response rows were found in this file.');
+    pendingImportRecords = records;
+    renderImportPreview(records);
+    showMessage(message, 'Review the preview and validation results before importing.', 'success');
+  } catch (error) {
+    pendingImportRecords = [];
+    preview.hidden = true;
+    showMessage(message, error.message || 'Could not read this response file.', 'error');
+  }
+}
+
+async function importApplications() {
+  const button = document.getElementById('confirm-import');
+  const message = document.getElementById('import-message');
+  if (!pendingImportRecords.length || pendingImportRecords.some(importedRecordError)) return;
+  button.disabled = true;
+  button.textContent = 'Importing...';
+  let importedCount = null;
+  try {
+    const csrfToken = await getCsrfToken();
+    const { response, payload } = await apiRequest('../backend/api/admin-import-applications.php', {
+      method: 'POST',
+      body: JSON.stringify({ applications: pendingImportRecords, _csrf: csrfToken })
+    });
+    if (!response.ok || !payload?.success) {
+      const rowError = payload?.row_errors?.[0];
+      throw new Error(rowError ? `Response ${rowError.row}: ${rowError.message}` : payload?.message || 'Could not import applications.');
+    }
+    importedCount = payload.imported;
+    pendingImportRecords = [];
+    document.getElementById('application-import-file').value = '';
+    document.getElementById('import-preview').hidden = true;
+    showMessage(message, `${payload.imported} imported; ${payload.duplicates} duplicate email${payload.duplicates === 1 ? '' : 's'} skipped.`, 'success');
+    await loadDashboardData();
+  } catch (error) {
+    const failure = importedCount === null
+      ? error.message || 'Import failed. No applications were imported.'
+      : `${importedCount} applications were imported, but the dashboard could not refresh. Reload the page.`;
+    showMessage(message, failure, 'error');
+  } finally {
+    button.textContent = 'Import applications';
+    button.disabled = pendingImportRecords.length === 0 || pendingImportRecords.some(importedRecordError);
+  }
+}
+
+async function sendApplicationEmail(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const modal = document.getElementById('email-compose-modal');
+  const button = document.getElementById('send-application-email');
+  const message = document.getElementById('application-email-message');
+  const formData = new FormData(form);
+  const subject = String(formData.get('subject') || '').trim();
+  const body = String(formData.get('message') || '').trim();
+  button.disabled = true;
+  button.textContent = 'Sending...';
+  try {
+    const csrfToken = await getCsrfToken();
+    const { response, payload } = await apiRequest('../backend/api/admin-send-application-email.php', {
+      method: 'POST',
+      body: JSON.stringify({ id: Number(modal.dataset.applicationId), subject, message: body, _csrf: csrfToken })
+    });
+    if (!response.ok || !payload?.success) throw new Error(payload?.message || 'Email could not be sent.');
+    showMessage(message, payload.audit_warning ? payload.message : 'Email sent successfully.', payload.audit_warning ? 'error' : 'success');
+    const recipient = document.getElementById('application-email-recipient').value;
+    form.reset();
+    document.getElementById('application-email-recipient').value = recipient;
+  } catch (error) {
+    showMessage(message, error.message || 'Email could not be sent.', 'error');
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Send email';
+  }
 }
 
 function bindMessageActions() {
@@ -591,6 +862,15 @@ async function loadDashboardData() {
 }
 
 function dashboardControlsInit() {
+  document.getElementById('preview-import')?.addEventListener('click', previewApplicationImport);
+  document.getElementById('confirm-import')?.addEventListener('click', importApplications);
+  document.getElementById('application-email-form')?.addEventListener('submit', sendApplicationEmail);
+  document.getElementById('application-import-file')?.addEventListener('change', () => {
+    pendingImportRecords = [];
+    document.getElementById('import-preview').hidden = true;
+    showMessage(document.getElementById('import-message'), '', 'error');
+  });
+
   document.querySelectorAll('[data-search], .filter-group select').forEach((control) => {
     control.addEventListener('input', () => {
       const table = control.closest('.panel')?.querySelector('.data-table');
@@ -648,24 +928,47 @@ function dashboardControlsInit() {
 function dashboardInit() {
   if (!document.body.classList.contains('admin-dashboard')) return;
 
-  (async () => {
-    try {
-      const { response, payload } = await apiRequest('../backend/api/admin-status.php', { method: 'GET' });
+  if (!getAuth()) {
+    apiRequest('../backend/api/admin-status.php', { method: 'GET' }).then(({ response, payload }) => {
       if (response.ok && payload?.authenticated) {
-        const user = payload.user || getAuth();
-        if (user) setAuth(user);
+        setAuth(payload.user);
+        window.location.reload();
       } else {
-        localStorage.removeItem(STORAGE_KEYS.auth);
-        window.location.href = 'login.html';
+        window.location.href = '../index.html';
       }
-    } catch (error) {
-      localStorage.removeItem(STORAGE_KEYS.auth);
-      window.location.href = 'login.html';
-    }
-  })();
+    }).catch(() => {
+      window.location.href = '../index.html';
+    });
+    return;
+  }
+
+  if (getAuth()) {
+    (async () => {
+      try {
+        const { response, payload } = await apiRequest('../backend/api/admin-status.php', { method: 'GET' });
+        if (response.ok && payload?.authenticated) {
+          const user = payload.user || getAuth();
+          if (user) setAuth(user);
+          if (payload.local_bypass) {
+            const headerPill = document.querySelector('.header-pill');
+            if (headerPill) headerPill.textContent = 'Local development access';
+            document.querySelectorAll('[data-section="logout"], #admin-sign-out').forEach((button) => {
+              button.style.display = 'none';
+            });
+          }
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.auth);
+          window.location.href = '../index.html';
+        }
+      } catch (error) {
+        localStorage.removeItem(STORAGE_KEYS.auth);
+        window.location.href = '../index.html';
+      }
+    })();
+  }
 
   if (!getAuth()) {
-    window.location.href = 'login.html';
+    window.location.href = '../index.html';
     return;
   }
 
@@ -745,14 +1048,13 @@ function dashboardInit() {
   bindMessageActions();
   dashboardControlsInit();
 
-  loadDashboardData().catch(() => {
-    localStorage.removeItem(STORAGE_KEYS.auth);
-    window.location.href = 'login.html';
+  loadDashboardData().catch((error) => {
+    showMessage(
+      document.getElementById('dashboard-message'),
+      error.message || 'Dashboard data is temporarily unavailable. Check the database connection and try again.',
+      'error'
+    );
   });
-}
-
-if (document.getElementById('admin-login-form')) {
-  loginPageInit();
 }
 
 if (document.getElementById('reset-request-form') || document.getElementById('reset-password-form')) {

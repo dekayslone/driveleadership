@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="admin.css?v=15" />
   </head>
   <body class="admin-dashboard">
     <div class="admin-layout">
@@ -180,8 +180,33 @@
           <div class="panel content-card">
             <div class="panel-header">
               <h3>Attendee Applications</h3>
-              <button type="button" class="inline-link export-btn" data-export="attendee-table">Export CSV</button>
+              <div class="panel-actions">
+                <button type="button" class="inline-link export-btn" data-export="attendee-table">Export CSV</button>
+              </div>
             </div>
+
+            <section class="import-card" aria-labelledby="import-applications-title">
+              <div>
+                <h4 id="import-applications-title">Import Google Form responses</h4>
+                <p>Upload a CSV, Excel workbook, or text-based PDF response table. Files are parsed in your browser; review the preview before importing.</p>
+              </div>
+              <div class="import-controls">
+                <label class="sr-only" for="application-import-file">Choose a response file</label>
+                <input id="application-import-file" type="file" accept=".csv,.xls,.xlsx,.pdf,application/pdf,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <button type="button" class="secondary-btn" id="preview-import">Preview file</button>
+              </div>
+              <p id="import-message" class="form-message" aria-live="polite"></p>
+              <div id="import-preview" class="import-preview" hidden>
+                <p id="import-summary" class="import-summary"></p>
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <thead><tr><th>Name</th><th>Email</th><th>Organisation</th><th>Submitted</th><th>Validation</th></tr></thead>
+                    <tbody id="import-preview-rows"></tbody>
+                  </table>
+                </div>
+                <button type="button" class="primary-btn import-submit" id="confirm-import" disabled>Import applications</button>
+              </div>
+            </section>
 
               <div class="toolbar">
               <div class="search-wrap">
@@ -427,14 +452,63 @@
               <span class="info-label">Application type</span>
               <span class="info-value">Attendee</span>
             </div>
+            <div class="info-block">
+              <span class="info-label">Organisation</span>
+              <span id="detail-organisation" class="info-value">Not provided</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Employment status</span>
+              <span id="detail-employment" class="info-value">Not provided</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Network member</span>
+              <span id="detail-network-member" class="info-value">Not provided</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">Referral source</span>
+              <span id="detail-referral" class="info-value">Not provided</span>
+            </div>
+          </div>
+
+          <div class="info-block application-expectations">
+            <span class="info-label">Expectations</span>
+            <p id="detail-expectations" class="info-value">Not provided</p>
           </div>
 
           <div class="detail-actions">
+            <button type="button" class="secondary-btn" id="email-applicant">Email applicant</button>
             <button type="button" class="secondary-btn" data-action="approve">Approve</button>
             <button type="button" class="danger-btn" data-action="reject">Reject</button>
             <button type="button" class="ghost-btn" data-action="pending">Keep Pending</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div id="email-compose-modal" class="modal" aria-modal="true" role="dialog" aria-labelledby="email-compose-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="email-compose-title">Email applicant</h3>
+          <button type="button" class="close-btn" aria-label="Close">×</button>
+        </div>
+        <form id="application-email-form" class="email-compose-form">
+          <label class="field">
+            <span>To</span>
+            <input id="application-email-recipient" type="email" readonly>
+          </label>
+          <label class="field">
+            <span>Subject</span>
+            <input id="email-subject" name="subject" type="text" maxlength="180" required>
+          </label>
+          <label class="field">
+            <span>Message</span>
+            <textarea id="email-body" name="message" rows="7" maxlength="5000" required></textarea>
+          </label>
+          <p id="application-email-message" class="form-message" aria-live="polite"></p>
+          <div class="detail-actions">
+            <button type="submit" class="primary-btn" id="send-application-email">Send email</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -474,6 +548,7 @@
       </div>
     </div>
 
-    <script src="admin.js?v=13"></script>
+    <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script defer src="admin.js?v=16"></script>
   </body>
 </html>
